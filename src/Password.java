@@ -53,7 +53,7 @@ public class Password {
         }
 
         if (!Patterns.digitOnce(password) && !Patterns.SpecialCharacterOnce(password)) {
-            ColorPrint.red("Пароль должен содержать хотя бы одну цифру или один специальный символ.");
+            ColorPrint.red("Пароль должен содержать хотя бы одну цифру или один специальный символ (@#$%^&+=).");
             return false;
         }
 
