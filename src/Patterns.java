@@ -1,19 +1,22 @@
 import java.util.regex.Pattern;
 
 public class Patterns {
-    private static String length = ".{6,20}";
-    private static String upperCaseENOnce = "(?=.*[A-Z])";
-    private static String upperCaseRUOnce = "(?=.*[А-ЯЁ])";
-    private static String lowCaseENOnce = "(?=.*[a-z])";
-    private static String lowCaseRUOnce = "(?=.*[а-яё])";
-    private static String digitOnce = "(?=.*[0-9])";
-    private static String specialCharacterOnce = "(?=.*[@#$%^&+=])";
-    private static String noSpace = "(?=\\S+$)";
+    private static final String length = ".{%d,%d}";
+    private static final String upperCaseENOnce = "(?=.*[A-Z])";
+    private static final String upperCaseRUOnce = "(?=.*[А-ЯЁ])";
+    private static final String lowCaseENOnce = "(?=.*[a-z])";
+    private static final String lowCaseRUOnce = "(?=.*[а-яё])";
+    private static final String digitOnce = "(?=.*[0-9])";
+    private static final String specialCharacterOnce = "(?=.*[@#$%^&+=])";
+    private static final String tripleCharacterRepeat = "^.*(.)\\1\\1.*$";
+    private static final String noSpace = "(?=\\S+$)";
 
     private Patterns() {}
 
-    public static boolean length(String string) {
-        Pattern pattern = Pattern.compile(length);
+    public static boolean length(String string, int min, int max) {
+        String regex = String.format(length, min, max);
+
+        Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(string).lookingAt();
     }
 
@@ -42,9 +45,14 @@ public class Patterns {
         return pattern.matcher(string).lookingAt();
     }
 
-    public static boolean SpecialCharacterOnce(String string) {
+    public static boolean specialCharacterOnce(String string) {
         Pattern pattern = Pattern.compile(specialCharacterOnce);
         return pattern.matcher(string).lookingAt();
+    }
+
+    public static boolean noTripleCharacterRepeat(String string) {
+        Pattern pattern = Pattern.compile(tripleCharacterRepeat);
+        return !pattern.matcher(string).find();
     }
 
     public static boolean noSpace(String string) {

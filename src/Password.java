@@ -47,12 +47,12 @@ public class Password {
     }
 
     public boolean matchesPolicy() {
-        if (!Patterns.length(password)) {
+        if (!Patterns.length(password, 6, 20)) {
             ColorPrint.red("Длина пароля должна составлять 6-20 символов.");
             return false;
         }
 
-        if (!Patterns.digitOnce(password) && !Patterns.SpecialCharacterOnce(password)) {
+        if (!Patterns.digitOnce(password) && !Patterns.specialCharacterOnce(password)) {
             ColorPrint.red("Пароль должен содержать хотя бы одну цифру или один специальный символ (@#$%^&+=).");
             return false;
         }
@@ -64,6 +64,11 @@ public class Password {
 
         if (!Patterns.upperCaseENOnce(password) && !Patterns.upperCaseRUOnce(password)) {
             ColorPrint.red("Пароль должен содержать хотя бы одну русскую или латинскую прописную букву.");
+            return false;
+        }
+
+        if (!Patterns.noTripleCharacterRepeat(password)) {
+            ColorPrint.red("Пароль не должен содержать больше двух идущих подряд повторяющихся символов.");
             return false;
         }
 
